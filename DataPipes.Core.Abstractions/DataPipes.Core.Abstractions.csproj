@@ -6,8 +6,4 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\DataPipes.Core.Abstractions\DataPipes.Core.Abstractions.csproj" />
-    </ItemGroup>
-
 </Project>

@@ -1,4 +1,4 @@
-namespace DataPipes.Core.Pipelines;
+namespace DataPipes.Core;
 
 public interface IPipeline<TIn, TOut>
 {

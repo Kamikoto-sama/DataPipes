@@ -6,16 +6,16 @@ public abstract class SingleTargetRelay<TIn, TOut> : IPipeRelay<TIn, TOut>
 {
     private IPipeTarget<TOut>? singleTarget;
 
-    public abstract void Initialize();
+    public abstract Task Initialize();
 
     public void LinkTo(IPipeTarget<TOut> target)
     {
         if (singleTarget != null)
-            throw new InvalidOperationException("Target already linked");
+            throw new InvalidOperationException($"Target '{target}' already linked");
         singleTarget = target;
     }
 
-    public async Task HandleEvent(TIn pipeEvent) => await HandleEvent(pipeEvent, singleTarget);
+    public async Task HandleEvent(TIn payload) => await HandleEvent(payload, singleTarget);
 
-    protected abstract Task HandleEvent(TIn pipeEvent, IPipeTarget<TOut>? target);
+    protected abstract Task HandleEvent(TIn payload, IPipeTarget<TOut>? target);
 }
