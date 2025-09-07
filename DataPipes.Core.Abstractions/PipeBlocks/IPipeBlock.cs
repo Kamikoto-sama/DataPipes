@@ -2,5 +2,6 @@ namespace DataPipes.Core.Abstractions.PipeBlocks;
 
 public interface IPipeBlock
 {
-    Task Initialize();
+    Task Initialize(CancellationToken cancellationToken);
+    PipeBlockMeta Meta { get; }
 }

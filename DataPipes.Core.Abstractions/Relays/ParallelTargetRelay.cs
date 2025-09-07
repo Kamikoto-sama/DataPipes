@@ -6,14 +6,14 @@ public abstract class ParallelTargetRelay<TIn, TOut>(int degreeOfParallelism) : 
 {
     private readonly SemaphoreSlim semaphore = new(degreeOfParallelism);
 
-    public override async Task HandleEvent(TIn payload)
+    public override async Task HandleEvent(TIn payload, CancellationToken cancellationToken)
     {
         var handleTasks = Targets.Select<IPipeTarget<TOut>, Task>(async target =>
         {
             await semaphore.WaitAsync();
             try
             {
-                await HandleEvent(payload, target);
+                await HandleEvent(payload, target, cancellationToken);
             }
             finally
             {
@@ -24,7 +24,7 @@ public abstract class ParallelTargetRelay<TIn, TOut>(int degreeOfParallelism) : 
         await Task.WhenAll(handleTasks);
     }
 
-    protected abstract Task HandleEvent(TIn payload, IPipeTarget<TOut>? target);
+    protected abstract Task HandleEvent(TIn payload, IPipeTarget<TOut>? target, CancellationToken cancellationToken);
 
     public virtual void Dispose() => semaphore.Dispose();
 }

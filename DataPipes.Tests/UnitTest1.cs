@@ -1,3 +1,4 @@
+using DataPipes.Core;
 using DataPipes.Core.Abstractions.PipeBlocks;
 
 namespace DataPipes.Tests;
@@ -5,11 +6,11 @@ namespace DataPipes.Tests;
 public class Tests
 {
     [Test]
-    public void Test1()
+    public async Task Test1()
     {
-        var source = GetSource<string>();
-        source
-            .Map(x => 10);
+        using var source = new EnumerableSource<int>([1, 2, 3]);
+        var mapper = new MapperBlock<int, string>(i => i.ToString());
+        var mapper2 = new MapperBlock<string, string>(i => i + ".file");
     }
 
     private static IPipeRelay<TIn, TOut> GetRelay<TIn, TOut>() => throw new NotImplementedException();
