@@ -5,7 +5,7 @@ namespace DataPipes.Core.Abstractions.Relays;
 public abstract class MultiTargetRelay<TIn, TOut> : IPipeRelay<TIn, TOut>
 {
     public IReadOnlyCollection<IPipeTarget<TOut>> LinkedTargets => Targets;
-    public virtual PipeBlockMeta Meta => PipeBlockMetaBuilder.Create(this);
+    public virtual PipeBlockMeta Meta => PipeBlockMetaBuilder.Create(this, Targets);
 
     protected readonly List<IPipeTarget<TOut>> Targets = [];
 
