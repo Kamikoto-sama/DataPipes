@@ -1,16 +1,19 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions.Linkers;
+using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
 
 namespace DataPipes.Core.Abstractions.Relays;
 
-public abstract class ParallelTargetRelay<TIn, TOut>(int degreeOfParallelism) : MultiTargetRelay<TIn, TOut>, IDisposable
+public abstract class ParallelTargetsRelayBase<TIn, TOut>(int degreeOfParallelism)
+    : MultiBlockLinkerBase<IPipeTarget<TOut>>, IPipeRelay<TIn, TOut>, IDisposable
 {
     private readonly SemaphoreSlim semaphore = new(degreeOfParallelism);
 
-    public override async Task HandleEvent(TIn payload, CancellationToken cancellationToken)
+    //TODO: Optimize
+    public async Task HandleEvent(TIn payload, CancellationToken cancellationToken)
     {
-        var handleTasks = Targets.Select<IPipeTarget<TOut>, Task>(async target =>
+        var handleTasks = Blocks.Select<IPipeTarget<TOut>, Task>(async target =>
         {
-            await semaphore.WaitAsync();
+            await semaphore.WaitAsync(cancellationToken);
             try
             {
                 await HandleEvent(payload, target, cancellationToken);

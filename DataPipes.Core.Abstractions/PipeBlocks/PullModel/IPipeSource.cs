@@ -1,4 +1,4 @@
-namespace DataPipes.Core.Abstractions.PipeBlocks;
+namespace DataPipes.Core.Abstractions.PipeBlocks.PullModel;
 
 public interface IPipeSource<T> : IPipeBlock
 {

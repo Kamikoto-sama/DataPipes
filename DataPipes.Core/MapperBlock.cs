@@ -1,9 +1,9 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
 using DataPipes.Core.Abstractions.Relays;
 
 namespace DataPipes.Core;
 
-public class MapperBlock<TIn, TOut> : SingleTargetRelay<TIn, TOut>
+public class MapperBlock<TIn, TOut> : SingleTargetRelayBase<TIn, TOut>
 {
     private readonly Func<TIn, Task<TOut>>? asyncMapper;
     private readonly Func<TIn, TOut>? syncMapper;
@@ -16,11 +16,6 @@ public class MapperBlock<TIn, TOut> : SingleTargetRelay<TIn, TOut>
     public MapperBlock(Func<TIn, Task<TOut>> asyncMapper)
     {
         this.asyncMapper = asyncMapper;
-    }
-
-    public override Task Initialize(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
     }
 
     protected override async Task HandleEvent(
