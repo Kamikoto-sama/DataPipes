@@ -3,7 +3,7 @@ using DataPipes.Core.Abstractions.Relays;
 
 namespace DataPipes.Core;
 
-public class ParallelTargetsRelay<T>(int degreeOfParallelism) : ParallelTargetsRelayBase<T, T>(degreeOfParallelism)
+public class SequentialTargetsRelay<T> : SequentialTargetsRelayBase<T, T>
 {
     protected override async Task HandlePayload(T payload, IPipeTarget<T>? target, CancellationToken cancellationToken)
     {

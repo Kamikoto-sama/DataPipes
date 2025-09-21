@@ -1,4 +1,5 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions.Meta;
+using DataPipes.Core.Abstractions.PipeBlocks;
 
 namespace DataPipes.Core.Abstractions.Linkers;
 
@@ -9,7 +10,7 @@ public abstract class SingleBlockLinkerBase<T> : IPipeLinker<T> where T : IPipeB
     protected T? SingleBlock;
 
     public virtual PipeBlockMeta Meta =>
-        PipeBlockMetaBuilder.Create(this, (IReadOnlyCollection<IPipeBlock>)LinkedBlocks);
+        PipeBlockMetaFactory.Create(this, (IReadOnlyCollection<IPipeBlock>)LinkedBlocks);
 
     public virtual async Task Initialize(CancellationToken cancellationToken)
     {
@@ -26,21 +27,12 @@ public abstract class SingleBlockLinkerBase<T> : IPipeLinker<T> where T : IPipeB
 
     public virtual void Unlink(T pipeBlock)
     {
-        if (EqualsToSingleBlock(pipeBlock))
+        if (EqualityComparer<T>.Default.Equals(pipeBlock, SingleBlock))
             SingleBlock = default;
     }
 
     public virtual void UnlinkAll()
     {
         SingleBlock = default;
-    }
-
-    //TODO: Refactor
-    private bool EqualsToSingleBlock(T otherBlock)
-    {
-        // ReSharper disable once SuspiciousTypeConversion.Global
-        if (SingleBlock is IEquatable<T> equatable)
-            return equatable.Equals(otherBlock);
-        return EqualityComparer<T>.Default.Equals(otherBlock, SingleBlock);
     }
 }

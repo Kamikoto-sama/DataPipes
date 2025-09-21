@@ -1,9 +1,9 @@
-﻿using DataPipes.Core.Abstractions;
-using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+﻿using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+using DataPipes.Core.Abstractions.Sources;
 
-namespace DataPipes.Core.Sources;
+namespace DataPipes.Core.Blocks.Sources;
 
-public class EnumerablePipeSource<T>(IEnumerable<T> source) : PipeSourceBase<T>, IDisposable
+public class EnumerablePipeSource<T>(IEnumerable<T> source, bool readToEnd) : PipeSourceBase<T>, IDisposable
 {
     private readonly IEnumerator<T> sourceEnumerator = source.GetEnumerator();
     private bool moveNext = true;
@@ -17,14 +17,15 @@ public class EnumerablePipeSource<T>(IEnumerable<T> source) : PipeSourceBase<T>,
     {
         if (moveNext && !sourceEnumerator.MoveNext())
         {
+            if (readToEnd)
+                return ToTaskResult(default, true);
             var tcs = new TaskCompletionSource<IPipeSourceConsumeResult<T>>();
             cancellationToken.Register(() => tcs.TrySetCanceled());
             return tcs.Task;
         }
 
         moveNext = false;
-        var result = new EnumerableSourceConsumeResult<T>(sourceEnumerator.Current);
-        return Task.FromResult<IPipeSourceConsumeResult<T>>(result);
+        return ToTaskResult(sourceEnumerator.Current, false);
     }
 
     public override Task Commit(IPipeSourceConsumeResult<T> consumeResult)
@@ -38,6 +39,11 @@ public class EnumerablePipeSource<T>(IEnumerable<T> source) : PipeSourceBase<T>,
     {
         sourceEnumerator.Dispose();
     }
+
+    private static Task<IPipeSourceConsumeResult<T>> ToTaskResult(T? source, bool endOfSource)
+    {
+        return Task.FromResult<IPipeSourceConsumeResult<T>>(new EnumerableSourceConsumeResult<T>(source, endOfSource));
+    }
 }
 
-file record EnumerableSourceConsumeResult<T>(T Payload, bool EndOfSource = false) : IPipeSourceConsumeResult<T>;
+file record EnumerableSourceConsumeResult<T>(T? Payload, bool EndOfSource) : IPipeSourceConsumeResult<T>;

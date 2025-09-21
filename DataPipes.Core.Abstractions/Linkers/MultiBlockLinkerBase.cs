@@ -1,4 +1,5 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions.Meta;
+using DataPipes.Core.Abstractions.PipeBlocks;
 
 namespace DataPipes.Core.Abstractions.Linkers;
 
@@ -9,7 +10,7 @@ public abstract class MultiBlockLinkerBase<T> : IPipeLinker<T> where T : IPipeBl
     protected readonly List<T> Blocks = [];
 
     public virtual PipeBlockMeta Meta =>
-        PipeBlockMetaBuilder.Create(this, (IReadOnlyCollection<IPipeBlock>)LinkedBlocks);
+        PipeBlockMetaFactory.Create(this, (IReadOnlyCollection<IPipeBlock>)LinkedBlocks);
 
     public virtual async Task Initialize(CancellationToken cancellationToken)
     {

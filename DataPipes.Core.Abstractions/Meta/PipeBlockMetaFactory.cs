@@ -1,19 +1,19 @@
 ﻿using DataPipes.Core.Abstractions.PipeBlocks;
 
-namespace DataPipes.Core.Abstractions;
+namespace DataPipes.Core.Abstractions.Meta;
 
-public static class PipeBlockMetaBuilder
+public static class PipeBlockMetaFactory
 {
     public static PipeBlockMeta Create(IPipeBlock block)
     {
         return Create(block, []);
     }
 
-    public static PipeBlockMeta Create(IPipeBlock block, IReadOnlyCollection<IPipeBlock> linkedBlocks)
+    public static PipeBlockMeta Create(IPipeBlock block, IEnumerable<IPipeBlock?> linkedBlocks)
     {
         var type = block.GetType();
         var blockName = GetTypeGenericName(type);
-        return new PipeBlockMeta(blockName) { LinkedBlocks = linkedBlocks };
+        return new PipeBlockMeta(blockName) { LinkedBlocks = linkedBlocks.Where(b => b != null).ToArray()! };
     }
 
     private static string GetTypeGenericName(Type type)

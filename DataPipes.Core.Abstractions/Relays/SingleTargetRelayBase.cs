@@ -5,10 +5,10 @@ namespace DataPipes.Core.Abstractions.Relays;
 
 public abstract class SingleTargetRelayBase<TIn, TOut> : SingleBlockLinkerBase<IPipeTarget<TOut>>, IPipeRelay<TIn, TOut>
 {
-    public async Task HandleEvent(TIn payload, CancellationToken cancellationToken)
+    public async Task HandlePayload(TIn payload, CancellationToken cancellationToken)
     {
-        await HandleEvent(payload, SingleBlock, cancellationToken);
+        await HandlePayload(payload, SingleBlock, cancellationToken);
     }
 
-    protected abstract Task HandleEvent(TIn payload, IPipeTarget<TOut>? target, CancellationToken cancellationToken);
+    protected abstract Task HandlePayload(TIn payload, IPipeTarget<TOut>? target, CancellationToken cancellationToken);
 }

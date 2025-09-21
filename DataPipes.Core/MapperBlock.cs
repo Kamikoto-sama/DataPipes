@@ -18,18 +18,16 @@ public class MapperBlock<TIn, TOut> : SingleTargetRelayBase<TIn, TOut>
         this.asyncMapper = asyncMapper;
     }
 
-    protected override async Task HandleEvent(
+    protected override async Task HandlePayload(
         TIn payload,
         IPipeTarget<TOut>? target,
         CancellationToken cancellationToken)
     {
-        if (syncMapper != null)
-            target?.HandleEvent(syncMapper.Invoke(payload), cancellationToken);
         if (asyncMapper != null)
-        {
-            var task = target?.HandleEvent(await asyncMapper.Invoke(payload), cancellationToken);
-            if (task != null)
-                await task;
-        }
+            if (target != null)
+                await target.HandlePayload(await asyncMapper(payload), cancellationToken);
+        if (syncMapper != null)
+            if (target != null)
+                await target.HandlePayload(syncMapper(payload), cancellationToken);
     }
 }

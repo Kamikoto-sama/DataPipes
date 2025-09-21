@@ -1,11 +1,11 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions.Meta;
 using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
 
-namespace DataPipes.Core.Abstractions;
+namespace DataPipes.Core.Abstractions.Sources;
 
 public abstract class PipeSourceBase<T> : IPipeSource<T>
 {
-    public virtual PipeBlockMeta Meta => PipeBlockMetaBuilder.Create(this);
+    public virtual PipeBlockMeta Meta => PipeBlockMetaFactory.Create(this);
 
     public abstract Task Initialize(CancellationToken cancellationToken);
 
