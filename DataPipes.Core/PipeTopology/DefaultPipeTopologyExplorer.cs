@@ -2,7 +2,7 @@
 
 namespace DataPipes.Core.PipeTopology;
 
-public class PipeTopologyExplorer : IPipeTopologyExplorer
+public class DefaultPipeTopologyExplorer : IPipeTopologyExplorer
 {
     private readonly List<IPipeBlock> blocks = [];
     private readonly List<PipeTopologyLink> blockLinks = [];

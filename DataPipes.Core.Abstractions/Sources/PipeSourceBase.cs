@@ -13,7 +13,7 @@ public abstract class PipeSourceBase<T> : IPipeSource<T>
 
     public abstract Task Commit(IPipeSourceConsumeResult<T> consumeResult);
 
-    protected TResult EnsureResultType<TResult>(IPipeSourceConsumeResult<T> result)
+    public static TResult EnsureResultType<TResult>(IPipeSourceConsumeResult<T> result)
     {
         if (result is TResult expectedResult)
             return expectedResult;

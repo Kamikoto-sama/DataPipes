@@ -38,11 +38,12 @@ public class MapperBlock<TIn, TOut> : SingleTargetRelayBase<TIn, TOut>
         IPipeTarget<TOut>? target,
         CancellationToken cancellationToken)
     {
+        if (target == null)
+            return;
+
         if (asyncMapper != null)
-            if (target != null)
-                await target.HandlePayload(await asyncMapper(payload), cancellationToken);
+            await target.HandlePayload(await asyncMapper(payload), cancellationToken);
         if (syncMapper != null)
-            if (target != null)
-                await target.HandlePayload(syncMapper(payload), cancellationToken);
+            await target.HandlePayload(syncMapper(payload), cancellationToken);
     }
 }

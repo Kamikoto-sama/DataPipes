@@ -2,9 +2,7 @@
 
 namespace DataPipes.Core.Abstractions.Meta;
 
-public class PipeBlockMeta(string name)
+public record PipeBlockMeta(string Name)
 {
-    public string Name { get; init; } = name;
-    public string? Description { get; init; }
     public IReadOnlyCollection<IPipeBlock> LinkedBlocks { get; init; } = [];
 }

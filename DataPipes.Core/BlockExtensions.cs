@@ -22,7 +22,7 @@ public static class BlockExtensions
         return sequentialTargetsRelay;
     }
 
-    public static MultiBlockLinkerBase<T> AddLinkTo<T>(this MultiBlockLinkerBase<T> linker, T pipeBlock)
+    public static MultiBlockLinkerBase<T> AddLink<T>(this MultiBlockLinkerBase<T> linker, T pipeBlock)
         where T : IPipeBlock
     {
         linker.LinkTo(pipeBlock);

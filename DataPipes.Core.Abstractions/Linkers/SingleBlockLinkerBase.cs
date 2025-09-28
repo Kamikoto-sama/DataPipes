@@ -6,11 +6,9 @@ namespace DataPipes.Core.Abstractions.Linkers;
 public abstract class SingleBlockLinkerBase<T> : IPipeLinker<T> where T : IPipeBlock
 {
     public IReadOnlyCollection<T> LinkedBlocks => SingleBlock == null ? [] : [SingleBlock];
+    public virtual PipeBlockMeta Meta => PipeBlockMetaFactory.Create(this, [SingleBlock]);
 
     protected T? SingleBlock;
-
-    public virtual PipeBlockMeta Meta =>
-        PipeBlockMetaFactory.Create(this, (IReadOnlyCollection<IPipeBlock>)LinkedBlocks);
 
     public virtual async Task Initialize(CancellationToken cancellationToken)
     {

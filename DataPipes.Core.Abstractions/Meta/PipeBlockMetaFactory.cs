@@ -13,6 +13,11 @@ public static class PipeBlockMetaFactory
     {
         var type = block.GetType();
         var blockName = GetTypeGenericName(type);
+        return Create(blockName, linkedBlocks);
+    }
+
+    public static PipeBlockMeta Create(string blockName, IEnumerable<IPipeBlock?> linkedBlocks)
+    {
         return new PipeBlockMeta(blockName) { LinkedBlocks = linkedBlocks.Where(b => b != null).ToArray()! };
     }
 
