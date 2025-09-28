@@ -12,4 +12,9 @@
         <ProjectReference Include="..\DataPipes.Core\DataPipes.Core.csproj"/>
     </ItemGroup>
 
+    <ItemGroup>
+        <PackageReference Include="Kami.Utils" Version="8.0.4"/>
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9"/>
+    </ItemGroup>
+
 </Project>

@@ -2,10 +2,8 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DataPipes.Events;
 
-public record PipeEvent<T>
+public record PipeEvent<T>(string Id)
 {
-    public required string Id { get; init; }
-
     [MemberNotNullWhen(false, nameof(Deleted))]
     public T? Payload { get; init; }
 
