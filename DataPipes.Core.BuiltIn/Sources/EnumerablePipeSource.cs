@@ -1,17 +1,12 @@
 ﻿using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
 using DataPipes.Core.Abstractions.Sources;
 
-namespace DataPipes.Core.Blocks.Sources;
+namespace DataPipes.Core.BuiltIn.Sources;
 
 public class EnumerablePipeSource<T>(IEnumerable<T> source, bool readToEnd) : PipeSourceBase<T>, IDisposable
 {
     private readonly IEnumerator<T> sourceEnumerator = source.GetEnumerator();
     private bool moveNext = true;
-
-    public override Task Initialize(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
 
     public override Task<IPipeSourceConsumeResult<T>> Consume(CancellationToken cancellationToken)
     {

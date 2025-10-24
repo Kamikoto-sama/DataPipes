@@ -3,7 +3,7 @@ using DataPipes.Core.Abstractions.Meta;
 using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
 using DataPipes.Core.Abstractions.Sources;
 
-namespace DataPipes.Events;
+namespace DataPipes.Pipelines.Linearizing;
 
 public class LocalLinearizer<T> : ILinearizer<T>
 {
@@ -14,6 +14,11 @@ public class LocalLinearizer<T> : ILinearizer<T>
     public Task Initialize(CancellationToken cancellationToken)
     {
         return Task.CompletedTask;
+    }
+
+    public void Complete()
+    {
+        queue.Writer.TryComplete();
     }
 
     public async Task HandlePayload(T payload, CancellationToken cancellationToken)
@@ -27,17 +32,23 @@ public class LocalLinearizer<T> : ILinearizer<T>
     public async Task<IPipeSourceConsumeResult<T>> Consume(CancellationToken cancellationToken)
     {
         var reader = queue.Reader;
-        await reader.WaitToReadAsync(cancellationToken);
-        return reader.TryPeek(out var item) ? item : throw new InvalidOperationException("Failed to peek item");
+        var completed = !await reader.WaitToReadAsync(cancellationToken);
+        if (reader.TryPeek(out var item))
+            return item;
+        return completed
+            ? new QueueItem(default, null!, true)
+            : throw new InvalidOperationException("Failed to peek item");
     }
 
     public Task Commit(IPipeSourceConsumeResult<T> consumeResult)
     {
         var item = PipeSourceBase<T>.EnsureResultType<QueueItem>(consumeResult);
         item.Tcs.TrySetResult();
-        return Task.CompletedTask;
+        return !queue.Reader.TryRead(out _)
+            ? throw new InvalidOperationException("Failed to commit item")
+            : Task.CompletedTask;
     }
 
-    private record QueueItem(T Payload, TaskCompletionSource Tcs, bool EndOfSource = false)
+    private record QueueItem(T? Payload, TaskCompletionSource Tcs, bool EndOfSource = false)
         : IPipeSourceConsumeResult<T>;
 }

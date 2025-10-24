@@ -1,23 +1,24 @@
 ﻿using DataPipes.Core.Abstractions.Linkers;
 using DataPipes.Core.Abstractions.PipeBlocks;
 using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+using DataPipes.Core.Blocks;
 
 namespace DataPipes.Core;
 
 public static class BlockExtensions
 {
-    public static ParallelTargetsRelay<TOut> BranchInParallel<TIn, TOut>(
-        this IPipeRelay<TIn, TOut> relay,
+    public static ParallelTargetsRelay<T> BranchInParallel<T>(
+        this IPipeTargetLinker<T> relay,
         int degreeOfParallelism)
     {
-        var paralleledRelay = new ParallelTargetsRelay<TOut>(degreeOfParallelism);
+        var paralleledRelay = new ParallelTargetsRelay<T>(degreeOfParallelism);
         relay.LinkTo(paralleledRelay);
         return paralleledRelay;
     }
 
-    public static SequentialTargetsRelay<TOut> BranchSequential<TIn, TOut>(this IPipeRelay<TIn, TOut> relay)
+    public static SequentialTargetsRelay<T> BranchSequentially<T>(this IPipeTargetLinker<T> relay)
     {
-        var sequentialTargetsRelay = new SequentialTargetsRelay<TOut>();
+        var sequentialTargetsRelay = new SequentialTargetsRelay<T>();
         relay.LinkTo(sequentialTargetsRelay);
         return sequentialTargetsRelay;
     }
@@ -29,27 +30,55 @@ public static class BlockExtensions
         return linker;
     }
 
-    public static IPipeRelay<TOut1, TOut2> To<TIn, TOut1, TOut2>(
-        this IPipeRelay<TIn, TOut1> source,
-        IPipeRelay<TOut1, TOut2> target)
-    {
-        source.LinkTo(target);
-        return target;
-    }
-
-    public static IPipeRelay<TIn, TOut> To<TIn, TOut>(
-        this IPipeRelay<TIn, TOut> source,
-        IPipeTarget<TOut> target)
-    {
-        source.LinkTo(target);
-        return source;
-    }
-
-    public static IPipeRelay<TIn, TOut> To<TIn, TOut>(
-        this IPipeLinker<IPipeTarget<TIn>> linker,
-        IPipeRelay<TIn, TOut> target)
+    public static IPipeRelay<TIn, TOut> To<TIn, TOut>(this IPipeTargetLinker<TIn> linker, IPipeRelay<TIn, TOut> target)
     {
         linker.LinkTo(target);
         return target;
+    }
+
+    public static IPipeTarget<T> To<T>(this IPipeTargetLinker<T> linker, IPipeTarget<T> target)
+    {
+        linker.LinkTo(target);
+        return target;
+    }
+
+    public static IPipeRelay<T, T> Union<T>(
+        this IPipeTargetLinker<T> baseLinkerBlock,
+        params IPipeTargetLinker<T>[] linkerBlocks
+    )
+    {
+        var hub = new EmptyRelay<T>();
+        baseLinkerBlock.LinkTo(hub);
+        foreach (var linkerBlock in linkerBlocks)
+            linkerBlock.LinkTo(hub);
+        return hub;
+    }
+
+    public static IPipeRelay<TIn, TOut> Map<TIn, TOut>(
+        this IPipeTargetLinker<TIn> relay,
+        Func<TIn, TOut> map)
+    {
+        return relay.To(new MapperBlock<TIn, TOut>(map));
+    }
+
+    public static IPipeRelay<TIn, TOut> Map<TIn, TOut>(
+        this IPipeTargetLinker<TIn> relay,
+        Func<TIn, Task<TOut>> asyncMap)
+    {
+        return relay.To(new MapperBlock<TIn, TOut>(asyncMap));
+    }
+
+    public static IPipeRelay<T, T> Filter<T>(
+        this IPipeTargetLinker<T> relay,
+        Func<T, bool> filter)
+    {
+        return relay.To(new FilterBlock<T>(filter));
+    }
+
+    public static IPipeRelay<T, T> Filter<T>(
+        this IPipeTargetLinker<T> relay,
+        Func<T, Task<bool>> asyncFilter)
+    {
+        return relay.To(new FilterBlock<T>(asyncFilter));
     }
 }

@@ -1,15 +1,10 @@
 ﻿using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
 using DataPipes.Core.Abstractions.Sources;
 
-namespace Sandbox;
+namespace DataPipes.Core.BuiltIn.Sources;
 
 public class EmptyPipeSource<T>(bool readToEnd) : PipeSourceBase<T>
 {
-    public override Task Initialize(CancellationToken cancellationToken)
-    {
-        return Task.CompletedTask;
-    }
-
     public override Task<IPipeSourceConsumeResult<T>> Consume(CancellationToken cancellationToken)
     {
         if (readToEnd)

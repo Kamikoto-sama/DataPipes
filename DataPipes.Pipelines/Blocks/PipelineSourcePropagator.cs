@@ -1,14 +1,18 @@
 ﻿using DataPipes.Core.Abstractions.Linkers;
 using DataPipes.Core.Abstractions.Meta;
-using DataPipes.Core.Abstractions.PipeBlocks;
 using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
 
-namespace DataPipes.Core;
+namespace DataPipes.Pipelines.Blocks;
 
-public class PipeSourcePropagator<T>(IPipeSource<T> source) : SingleBlockLinkerBase<IPipeTarget<T>>, IPipeRunner
+public class PipelineSourcePropagator<T>(IPipeSource<PipelinePayload<T>> source, string? name = null)
+    : SingleTargetLinkerBase<PipelinePayload<T>>, IFinitePipeRunner
 {
-    public override PipeBlockMeta Meta => PipeBlockMetaFactory.Create(this, [source, SingleBlock]);
+    public override PipeBlockMeta Meta => PipeBlockMetaFactory.Create(
+        name ?? GetType().Name,
+        [source, SingleBlock]
+    );
+
+    public event Action? OnFinished;
 
     public override async Task Initialize(CancellationToken cancellationToken)
     {
@@ -23,7 +27,10 @@ public class PipeSourcePropagator<T>(IPipeSource<T> source) : SingleBlockLinkerB
         {
             var result = await source.Consume(cancellationToken);
             if (result.EndOfSource)
+            {
+                OnFinished?.Invoke();
                 return;
+            }
 
             var payload = result.Payload!;
             if (target != null)

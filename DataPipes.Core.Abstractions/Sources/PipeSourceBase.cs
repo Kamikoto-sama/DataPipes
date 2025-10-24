@@ -7,7 +7,10 @@ public abstract class PipeSourceBase<T> : IPipeSource<T>
 {
     public virtual PipeBlockMeta Meta => PipeBlockMetaFactory.Create(this);
 
-    public abstract Task Initialize(CancellationToken cancellationToken);
+    public virtual Task Initialize(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 
     public abstract Task<IPipeSourceConsumeResult<T>> Consume(CancellationToken cancellationToken);
 

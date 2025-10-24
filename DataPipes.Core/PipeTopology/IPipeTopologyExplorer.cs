@@ -4,5 +4,5 @@ namespace DataPipes.Core.PipeTopology;
 
 public interface IPipeTopologyExplorer
 {
-    PipeTopology Explore(IPipeBlock pipeEntryBlock);
+    PipeTopology Explore(params IPipeBlock[] pipeEntryBlocks);
 }

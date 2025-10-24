@@ -2,4 +2,9 @@
 
 namespace DataPipes.Core.PipeTopology;
 
-public record PipeTopology(IPipeBlock[] Blocks, PipeTopologyLink[] BlockLinks);
+public class PipeTopology
+{
+    public required IReadOnlyList<int> EntryBlockIndices { get; init; }
+    public required IReadOnlyList<IPipeBlock> Blocks { get; init; }
+    public required IReadOnlyDictionary<int, PipeTopologyLink> BlockLinks { get; init; }
+}

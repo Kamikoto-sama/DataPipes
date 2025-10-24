@@ -7,7 +7,10 @@ public abstract class PipeTargetBase<T> : IPipeTarget<T>
 {
     public PipeBlockMeta Meta => PipeBlockMetaFactory.Create(this);
 
-    public abstract Task Initialize(CancellationToken cancellationToken);
+    public virtual Task Initialize(CancellationToken cancellationToken)
+    {
+        return Task.CompletedTask;
+    }
 
     public abstract Task HandlePayload(T payload, CancellationToken cancellationToken);
 }

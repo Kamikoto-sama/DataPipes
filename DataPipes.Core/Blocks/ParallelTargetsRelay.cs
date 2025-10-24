@@ -1,7 +1,7 @@
 ﻿using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
 using DataPipes.Core.Abstractions.Relays;
 
-namespace DataPipes.Core;
+namespace DataPipes.Core.Blocks;
 
 public class ParallelTargetsRelay<T>(int degreeOfParallelism) : ParallelTargetsRelayBase<T, T>(degreeOfParallelism)
 {

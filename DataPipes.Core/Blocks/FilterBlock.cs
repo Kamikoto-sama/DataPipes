@@ -3,7 +3,7 @@ using DataPipes.Core.Abstractions.Meta;
 using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
 using DataPipes.Core.Abstractions.Relays;
 
-namespace DataPipes.Core;
+namespace DataPipes.Core.Blocks;
 
 public class FilterBlock<T> : SingleTargetRelayBase<T, T>
 {
