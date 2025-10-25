@@ -1,3 +1,3 @@
-﻿namespace DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+﻿namespace DataPipes.Core.Abstractions.PullModel;
 
 public interface IPipeSourceLinker<T> : IPipeLinker<IPipeSource<T>>;

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+namespace DataPipes.Core.Abstractions.PullModel;
 
 public interface IPipeSourceConsumeResult<out T>
 {

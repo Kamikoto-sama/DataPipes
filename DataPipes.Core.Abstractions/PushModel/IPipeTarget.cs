@@ -1,4 +1,4 @@
-namespace DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+namespace DataPipes.Core.Abstractions.PushModel;
 
 public interface IPipeTarget<in T> : IPipeBlock
 {

@@ -1,4 +1,4 @@
-﻿namespace DataPipes.Core.Abstractions.PipeBlocks;
+﻿namespace DataPipes.Core.Abstractions;
 
 public interface IPipeLinker<T> : IPipeBlock where T : IPipeBlock
 {
