@@ -1,4 +1,4 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
 
 namespace DataPipes.Core.PipeTopology;
 

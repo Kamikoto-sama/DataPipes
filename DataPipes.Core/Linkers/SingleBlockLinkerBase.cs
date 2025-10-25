@@ -1,7 +1,7 @@
-﻿using DataPipes.Core.Abstractions.Meta;
-using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
+using DataPipes.Core.Meta;
 
-namespace DataPipes.Core.Abstractions.Linkers;
+namespace DataPipes.Core.Linkers;
 
 public abstract class SingleBlockLinkerBase<T> : IPipeLinker<T> where T : IPipeBlock
 {

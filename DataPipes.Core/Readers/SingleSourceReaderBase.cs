@@ -1,7 +1,7 @@
-﻿using DataPipes.Core.Abstractions.Linkers;
-using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+﻿using DataPipes.Core.Abstractions.PullModel;
+using DataPipes.Core.Linkers;
 
-namespace DataPipes.Core.Abstractions.Readers;
+namespace DataPipes.Core.Readers;
 
 //TODO: MultiSourceReader
 public abstract class SingleSourceReaderBase<TIn, TOut>

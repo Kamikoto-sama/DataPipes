@@ -1,12 +1,12 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
 
 namespace DataPipes.Core.PipeTopology;
 
-public class DefaultPipeTopologyExplorer : IPipeTopologyExplorer
+public class PipeTopologyExplorer : IPipeTopologyExplorer
 {
     public PipeTopology Explore(params IPipeBlock[] pipeEntryBlocks)
     {
-        var pipeTraverser = new DefaultPipeTraverser();
+        var pipeTraverser = new PipeTraverser();
         var entryBlockIndices = new List<int>();
         foreach (var pipeEntryBlock in pipeEntryBlocks)
         {

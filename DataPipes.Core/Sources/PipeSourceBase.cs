@@ -1,7 +1,8 @@
-﻿using DataPipes.Core.Abstractions.Meta;
-using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
+﻿using DataPipes.Core.Abstractions;
+using DataPipes.Core.Abstractions.PullModel;
+using DataPipes.Core.Meta;
 
-namespace DataPipes.Core.Abstractions.Sources;
+namespace DataPipes.Core.Sources;
 
 public abstract class PipeSourceBase<T> : IPipeSource<T>
 {

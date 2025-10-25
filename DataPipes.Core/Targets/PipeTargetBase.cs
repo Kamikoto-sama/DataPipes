@@ -1,7 +1,8 @@
-﻿using DataPipes.Core.Abstractions.Meta;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions;
+using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Core.Meta;
 
-namespace DataPipes.Core.Abstractions.Targets;
+namespace DataPipes.Core.Targets;
 
 public abstract class PipeTargetBase<T> : IPipeTarget<T>
 {

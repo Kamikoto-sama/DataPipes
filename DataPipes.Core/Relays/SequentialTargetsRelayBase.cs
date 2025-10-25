@@ -1,7 +1,7 @@
-﻿using DataPipes.Core.Abstractions.Linkers;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Core.Linkers;
 
-namespace DataPipes.Core.Abstractions.Relays;
+namespace DataPipes.Core.Relays;
 
 public abstract class SequentialTargetsRelayBase<TIn, TOut>
     : MultiBlockLinkerBase<IPipeTarget<TOut>>, IPipeRelay<TIn, TOut>

@@ -1,5 +1,5 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions.PushModel;
 
-namespace DataPipes.Core.Abstractions.Linkers;
+namespace DataPipes.Core.Linkers;
 
 public abstract class MultiTargetLinkerBase<T> : MultiBlockLinkerBase<IPipeTarget<T>>, IPipeTargetLinker<T>;

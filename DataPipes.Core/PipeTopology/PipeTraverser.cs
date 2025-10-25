@@ -1,8 +1,8 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
 
 namespace DataPipes.Core.PipeTopology;
 
-internal class DefaultPipeTraverser
+internal class PipeTraverser
 {
     public readonly List<IPipeBlock> Blocks = [];
     public readonly List<(int Linker, int[] Linked)> BlockLinks = [];

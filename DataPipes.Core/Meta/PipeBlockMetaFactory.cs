@@ -1,6 +1,6 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
 
-namespace DataPipes.Core.Abstractions.Meta;
+namespace DataPipes.Core.Meta;
 
 public static class PipeBlockMetaFactory
 {
