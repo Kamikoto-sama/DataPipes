@@ -8,7 +8,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sandbox", "Sandbox\Sandbox.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPipes.Pipelines", "DataPipes.Pipelines\DataPipes.Pipelines.csproj", "{EB5E2D3D-2285-4721-8347-76DBC771368A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPipes.Core.BuiltIn", "DataPipes.Core.BuiltIn\DataPipes.Core.BuiltIn.csproj", "{FC2078B0-312F-4A34-85EB-0D8CEAECB231}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataPipes.Core.Blocks", "DataPipes.Core.Blocks\DataPipes.Core.Blocks.csproj", "{FC2078B0-312F-4A34-85EB-0D8CEAECB231}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

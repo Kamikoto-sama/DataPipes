@@ -1,6 +1,6 @@
-﻿using DataPipes.Core.Abstractions.Targets;
+﻿using DataPipes.Core.Targets;
 
-namespace DataPipes.Core.BuiltIn.Targets;
+namespace DataPipes.Core.Blocks.Targets;
 
 public class ConsolePipeTarget : PipeTargetBase<string>
 {
