@@ -1,4 +1,4 @@
-﻿using DataPipes.Core.Abstractions.Meta;
+﻿using DataPipes.Core.Abstractions;
 
 namespace Sandbox;
 

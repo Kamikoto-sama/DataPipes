@@ -1,7 +1,7 @@
 ﻿using DataPipes.Core.Abstractions.PullModel;
 using DataPipes.Core.Sources;
 
-namespace DataPipes.Core.Blocks.Sources;
+namespace DataPipes.Core.EdgeBlocks.Sources;
 
 public class EmptyPipeSource<T>(bool readToEnd) : PipeSourceBase<T>
 {

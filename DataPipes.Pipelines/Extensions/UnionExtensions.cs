@@ -1,6 +1,7 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
-using DataPipes.Pipelines.Blocks;
+﻿using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Pipelines.Abstractions;
+using DataPipes.Pipelines.Abstractions.Blocks;
+using DataPipes.Pipelines.JointBlocks;
 
 namespace DataPipes.Pipelines.Extensions;
 
@@ -22,13 +23,5 @@ public static class UnionExtensions
         Func<PipelineContext, IPipelineRailing<IPipeTargetLinker<PipelinePayload<T>>>> pipeBuilder)
     {
         return source.UnionWith(pipeBuilder(source.Context));
-    }
-
-    public static IPipelineRailing<IPipelineRelay<T, T>> AndFrom<T>(
-        this IPipelineRailing<IPipeTargetLinker<PipelinePayload<T>>> railing,
-        IPipeSource<T> pipeSource)
-    {
-        var pipe = railing.Context.ReadFrom(pipeSource);
-        return railing.UnionWith(pipe);
     }
 }

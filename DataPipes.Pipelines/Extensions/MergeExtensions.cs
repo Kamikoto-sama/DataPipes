@@ -1,5 +1,7 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions;
+using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Pipelines.Abstractions;
+using DataPipes.Pipelines.Abstractions.Blocks;
 using DataPipes.Pipelines.Linearizing;
 
 namespace DataPipes.Pipelines.Extensions;

@@ -7,12 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataPipes.Core\DataPipes.Core.csproj"/>
+        <ProjectReference Include="..\DataPipes.Core.EdgeBlocks\DataPipes.Core.EdgeBlocks.csproj"/>
         <ProjectReference Include="..\DataPipes.Pipelines.Abstractions\DataPipes.Pipelines.Abstractions.csproj"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.10"/>
+        <ProjectReference Include="..\DataPipes.Pipelines\DataPipes.Pipelines.csproj"/>
     </ItemGroup>
 
 </Project>

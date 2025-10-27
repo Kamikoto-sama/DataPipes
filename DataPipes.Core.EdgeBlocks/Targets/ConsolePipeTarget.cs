@@ -1,6 +1,6 @@
 ﻿using DataPipes.Core.Targets;
 
-namespace DataPipes.Core.Blocks.Targets;
+namespace DataPipes.Core.EdgeBlocks.Targets;
 
 public class ConsolePipeTarget : PipeTargetBase<string>
 {

@@ -1,6 +1,7 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Pipelines.Abstractions;
 
-namespace DataPipes.Pipelines.Blocks;
+namespace DataPipes.Pipelines.JointBlocks;
 
 public class PipelineMapperBlock<TIn, TOut>(Func<PipelinePayload<TIn>, Task<PipelinePayload<TOut>>> mapper)
     : PipelineRelayBase<TIn, TOut>

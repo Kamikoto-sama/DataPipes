@@ -17,8 +17,10 @@ public abstract class PipeSourceBase<T> : IPipeSource<T>
 
     public abstract Task Commit(IPipeSourceConsumeResult<T> consumeResult);
 
-    public static TResult EnsureResultType<TResult>(IPipeSourceConsumeResult<T> result)
+    public static TResult EnsureResultType<TResult>(IPipeSourceConsumeResult<T> result, bool throwOnEndOfSource = false)
     {
+        if (result.EndOfSource && throwOnEndOfSource)
+            throw new InvalidOperationException("Cannot commit end-of-source result");
         if (result is TResult expectedResult)
             return expectedResult;
         throw new ArgumentException($"Expected result of type '{nameof(TResult)}', but got type '{result.GetType()}'");

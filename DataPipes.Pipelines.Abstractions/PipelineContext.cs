@@ -1,3 +1,3 @@
-﻿namespace DataPipes.Pipelines;
+﻿namespace DataPipes.Pipelines.Abstractions;
 
 public record PipelineContext(IServiceProvider Services);

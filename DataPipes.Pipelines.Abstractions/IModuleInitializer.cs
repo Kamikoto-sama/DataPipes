@@ -1,4 +1,4 @@
-﻿namespace DataPipes.Pipelines;
+﻿namespace DataPipes.Pipelines.Abstractions;
 
 public interface IModuleInitializer
 {

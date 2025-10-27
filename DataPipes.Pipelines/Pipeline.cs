@@ -1,15 +1,8 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks;
+﻿using DataPipes.Core.Abstractions;
+using DataPipes.Pipelines.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataPipes.Pipelines;
-
-public interface IPipeline
-{
-    PipelineContext Context { get; }
-    IReadOnlyList<IPipeRunner> EntryBlocks { get; }
-    Task Initialize(CancellationToken cancellationToken);
-    Task Run(CancellationToken cancellationToken);
-}
 
 public class Pipeline(PipelineContext context, IEnumerable<IPipeRunner> pipeRunners) : IPipeline
 {

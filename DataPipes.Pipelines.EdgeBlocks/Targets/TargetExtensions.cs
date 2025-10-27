@@ -1,7 +1,8 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
-using DataPipes.Pipelines.Blocks;
+﻿using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Pipelines.Abstractions;
+using DataPipes.Pipelines.Extensions;
 
-namespace DataPipes.Pipelines.Extensions;
+namespace DataPipes.Pipelines.EdgeBlocks.Targets;
 
 public static class TargetExtensions
 {

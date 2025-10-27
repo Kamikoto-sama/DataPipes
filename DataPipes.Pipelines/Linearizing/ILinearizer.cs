@@ -1,5 +1,5 @@
-﻿using DataPipes.Core.Abstractions.PipeBlocks.PullModel;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
+﻿using DataPipes.Core.Abstractions.PullModel;
+using DataPipes.Core.Abstractions.PushModel;
 
 namespace DataPipes.Pipelines.Linearizing;
 

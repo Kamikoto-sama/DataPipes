@@ -1,0 +1,3 @@
+﻿block: DataPipes.Core.Blocks.HubBlock<string>
+links:
+  - block: DataPipes.Core.BuiltIn.Targets.ConsolePipeTarget

@@ -1,4 +1,4 @@
-﻿namespace DataPipes.Pipelines.Blocks;
+﻿namespace DataPipes.Pipelines.Abstractions.Blocks;
 
 public interface IPipelineMapper<in TIn, TOut>
 {

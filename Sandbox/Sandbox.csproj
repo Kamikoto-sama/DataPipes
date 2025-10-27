@@ -8,13 +8,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\DataPipes.Core.Blocks\DataPipes.Core.Blocks.csproj"/>
+        <ProjectReference Include="..\DataPipes.Core.EdgeBlocks\DataPipes.Core.EdgeBlocks.csproj"/>
         <ProjectReference Include="..\DataPipes.Core\DataPipes.Core.csproj"/>
+        <ProjectReference Include="..\DataPipes.Pipelines\DataPipes.Pipelines.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Kami.Utils" Version="8.0.4"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.14.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="4.14.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.14.0"/>
         <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.9"/>
+        <PackageReference Include="YamlDotNet" Version="16.3.0"/>
     </ItemGroup>
 
 </Project>

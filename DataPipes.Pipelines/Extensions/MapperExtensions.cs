@@ -1,6 +1,7 @@
-﻿using DataPipes.Core;
-using DataPipes.Core.Abstractions.PipeBlocks.PushModel;
-using DataPipes.Pipelines.Blocks;
+﻿using DataPipes.Core.Abstractions.PushModel;
+using DataPipes.Pipelines.Abstractions;
+using DataPipes.Pipelines.Abstractions.Blocks;
+using DataPipes.Pipelines.JointBlocks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataPipes.Pipelines.Extensions;
@@ -18,7 +19,7 @@ public static class MapperExtensions
                 items.Add(await mapper(item));
             return new PipelinePayload<TOut>(items.ToArray(), payload.Context);
         });
-        return source.TailWith(source.TailBlock.To(mapperBlock));
+        return source.To(mapperBlock);
     }
 
     public static IPipelineRailing<IPipeRelay<PipelinePayload<TIn>, PipelinePayload<TOut>>> Map<TIn, TOut>(
@@ -39,7 +40,7 @@ public static class MapperExtensions
                 items.Add(await mapperImpl.Map(item));
             return new PipelinePayload<TOut>(items.ToArray(), payload.Context);
         });
-        return source.TailWith(source.TailBlock.To(mapperBlock));
+        return source.To(mapperBlock);
     }
 
     public static IPipelineRailing<IPipeRelay<PipelinePayload<TIn>, PipelinePayload<TOut>>> Map<TIn, TOut, TMapper>(
@@ -54,18 +55,6 @@ public static class MapperExtensions
                 items.Add(await mapper.Map(item));
             return new PipelinePayload<TOut>(items.ToArray(), payload.Context);
         });
-        return source.TailWith(source.TailBlock.To(mapperBlock));
-    }
-
-    public static IPipelineRailing<IPipeRelay<PipelinePayload<T>, PipelinePayload<T>>> ModifyContext<T>(
-        this IPipelineRailing<IPipeTargetLinker<PipelinePayload<T>>> source,
-        Func<PipelineContext, PipelineContext> modify)
-    {
-        var mapperBlock = new PipelineMapperBlock<T, T>(payload =>
-        {
-            var newContext = modify(payload.Context);
-            return Task.FromResult(payload with { Context = newContext });
-        });
-        return source.TailWith(source.TailBlock.To(mapperBlock));
+        return source.To(mapperBlock);
     }
 }

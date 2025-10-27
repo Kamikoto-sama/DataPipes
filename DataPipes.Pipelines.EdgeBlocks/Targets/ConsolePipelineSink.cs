@@ -1,9 +1,11 @@
-﻿using DataPipes.Core.Abstractions.Targets;
+﻿using DataPipes.Core.Targets;
+using DataPipes.Pipelines.Abstractions;
+using DataPipes.Pipelines.Abstractions.Blocks;
 
-namespace DataPipes.Pipelines.Blocks;
+namespace DataPipes.Pipelines.EdgeBlocks.Targets;
 
 public class ConsolePipelineSink(ConsolePipelineSinkOptions options)
-    : PipeTargetBase<PipelinePayload<string>>, IPipelineSink<string>
+    : PipeTargetBase<PipelinePayload<string>>, IPipelineTarget<string>
 {
     public override Task HandlePayload(PipelinePayload<string> payload, CancellationToken cancellationToken)
     {
