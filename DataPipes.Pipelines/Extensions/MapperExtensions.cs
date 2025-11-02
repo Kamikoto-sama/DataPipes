@@ -1,7 +1,7 @@
 ﻿using DataPipes.Core.Abstractions.PushModel;
 using DataPipes.Pipelines.Abstractions;
 using DataPipes.Pipelines.Abstractions.Blocks;
-using DataPipes.Pipelines.JointBlocks;
+using DataPipes.Pipelines.Blocks;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DataPipes.Pipelines.Extensions;

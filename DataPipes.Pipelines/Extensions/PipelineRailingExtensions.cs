@@ -1,9 +1,8 @@
-﻿using DataPipes.Core.Abstractions;
+﻿using System.Text.Json;
 using DataPipes.Core.Abstractions.PullModel;
 using DataPipes.Core.Abstractions.PushModel;
-using DataPipes.Core.PipeTopology;
 using DataPipes.Pipelines.Abstractions;
-using DataPipes.Pipelines.JointBlocks;
+using DataPipes.Pipelines.Blocks;
 
 namespace DataPipes.Pipelines.Extensions;
 
@@ -33,13 +32,14 @@ public static class PipelineRailingExtensions
         return source.TailWith(target);
     }
 
-    public static async Task ExecuteAsync(
-        this IPipelineRailing<IPipeBlock> railing,
-        CancellationToken cancellationToken)
+    public static IPipelineRailing<IPipeRelay<PipelinePayload<T>, PipelinePayload<KeyedItem<T>>>> KeyBy<T, TKey>(
+        this IPipelineRailing<IPipeTargetLinker<PipelinePayload<T>>> source,
+        Func<T, TKey> keySelector)
     {
-        new PipeTopologyExplorer().Explore(railing.EntryBlocks.ToArray<IPipeBlock>());
-        var pipeline = new Pipeline(railing.Context, railing.EntryBlocks);
-        await pipeline.Initialize(cancellationToken);
-        await pipeline.Run(cancellationToken);
+        return source.Map(payload =>
+        {
+            var key = JsonSerializer.Serialize(keySelector(payload));
+            return new KeyedItem<T>(key, payload);
+        });
     }
 }

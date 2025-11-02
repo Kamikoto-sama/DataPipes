@@ -1,10 +1,11 @@
 ﻿using System.Threading.Channels;
 using DataPipes.Core.Abstractions.PullModel;
+using DataPipes.Core.Abstractions.PushModel;
 using DataPipes.Core.Sources;
 
 namespace DataPipes.Pipelines.Linearizing;
 
-public class LocalLinearizer<T> : PipeSourceBase<T>, ILinearizer<T>
+public class LocalLinearizer<T> : PipeSourceBase<T>, IPipeTarget<T>, IPipeSource<T>
 {
     private readonly Channel<QueueItem> queue = Channel.CreateUnbounded<QueueItem>();
 
@@ -34,10 +35,7 @@ public class LocalLinearizer<T> : PipeSourceBase<T>, ILinearizer<T>
 
     public override Task Commit(IPipeSourceConsumeResult<T> consumeResult)
     {
-        if (consumeResult.EndOfSource)
-            throw new InvalidOperationException("Cannot commit end-of-source result");
-
-        var item = EnsureResultType<QueueItem>(consumeResult);
+        var item = EnsureResultType<QueueItem>(consumeResult, true);
         item.Tcs!.TrySetResult();
         return !queue.Reader.TryRead(out _)
             ? throw new InvalidOperationException("Failed to commit item")

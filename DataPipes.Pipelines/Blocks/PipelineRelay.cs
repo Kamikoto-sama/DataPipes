@@ -1,7 +1,7 @@
 ﻿using DataPipes.Core.Abstractions.PushModel;
 using DataPipes.Pipelines.Abstractions;
 
-namespace DataPipes.Pipelines.JointBlocks;
+namespace DataPipes.Pipelines.Blocks;
 
 public class PipelineRelay<T> : PipelineRelayBase<T, T>
 {

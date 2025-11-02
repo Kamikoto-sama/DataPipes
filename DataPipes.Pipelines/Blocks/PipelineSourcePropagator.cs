@@ -5,7 +5,7 @@ using DataPipes.Core.Meta;
 using DataPipes.Pipelines.Abstractions;
 using DataPipes.Pipelines.Abstractions.Blocks;
 
-namespace DataPipes.Pipelines.JointBlocks;
+namespace DataPipes.Pipelines.Blocks;
 
 public class PipelineSourcePropagator<T>(IPipeSource<PipelinePayload<T>> source, string? name = null)
     : SingleTargetLinkerBase<PipelinePayload<T>>, IFinitePipeRunner
