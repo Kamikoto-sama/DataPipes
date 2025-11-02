@@ -13,8 +13,8 @@ public static class LinearizingExtensions
     {
         var context = railing.Context;
         var factory =
-            context.Services.GetRequiredKeyedService<ILinearizerFactory<PipelinePayload<T>>>(LinearizerType.Remote);
-        var (target, source) = factory.Create();
+            context.Services.GetRequiredKeyedService<ILinearizerFactory>(LinearizerType.Remote);
+        var (target, source) = factory.Create<PipelinePayload<T>>();
         railing.TailBlock.LinkTo(target);
         return context.ReadFrom(source);
     }
